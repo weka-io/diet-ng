@@ -1,7 +1,8 @@
 project('Diet-NG', 'd',
-    meson_version: '>=0.40',
+    meson_version: '>=0.56',
     license: 'MIT',
-    version: '1.7.4'
+    version: '1.7.4',
+    default_options: ['buildtype=release']
 )
 
 project_soversion = '0'
@@ -32,6 +33,7 @@ diet_lib = library('diet',
         [diet_src],
         include_directories: [src_dir],
         install: true,
+        pic: true,
         version: project_version,
         soversion: project_soversion
 )
@@ -55,8 +57,8 @@ diet_dep = declare_dependency(
 diet_test_exe = executable('test_diet',
     [diet_src],
     include_directories: [src_dir],
-    d_args: meson.get_compiler('d').unittest_args(),
-    link_args: '-main'
+    d_unittest: true,
+    link_args: '--main'
 )
 test('test_diet', diet_test_exe)
 
